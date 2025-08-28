@@ -1,5 +1,3 @@
-import six
-
 from django.conf import settings
 from deep_translator import (GoogleTranslator, 
                             MyMemoryTranslator,
@@ -29,7 +27,7 @@ class GoogleTranslatorService(BaseTranslatorService):
     def translate_string(self, text, target_language, source_language='auto'):
         self.service = GoogleTranslator(source=source_language, target=target_language)
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text)
     
 
@@ -38,7 +36,7 @@ class MyMemoryTranslatorService(BaseTranslatorService):
     def translate_string(self, text, target_language, source_language='en'):
         self.service = MyMemoryTranslator(source=source_language, target=target_language)
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text)
     
 class DeeplTranslatorService(BaseTranslatorService):
@@ -60,7 +58,7 @@ class DeeplTranslatorService(BaseTranslatorService):
             use_free_api=getattr(settings, 'DEEPL_FREE_API', use_free_api)
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text)
     
 
@@ -80,7 +78,7 @@ class QcriTranslatorService(BaseTranslatorService):
             self.developer_key,
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(source=source_language, 
             target=target_language, text=text, domain="news")
     
@@ -90,7 +88,7 @@ class PonsTranslatorService(BaseTranslatorService):
     def translate_string(self, text, target_language, source_language='en'):
         self.service = PonsTranslator(source=source_language, target=target_language)
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text)
     
 class YandexTranslatorService(BaseTranslatorService):
@@ -109,7 +107,7 @@ class YandexTranslatorService(BaseTranslatorService):
             self.developer_key,
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(source=source_language, 
             target=target_language, text=text)
     
@@ -134,7 +132,7 @@ class MicrosoftTranslatorService(BaseTranslatorService):
             api_key=self.developer_key,
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text=text)
     
 
@@ -147,7 +145,7 @@ class PapagoTranslatorService(BaseTranslatorService):
     def __init__(self):
 
         self.client_id = getattr(settings, 'PAPAGO_CLIENT_ID', None)
-        assert self.secret_key, ('`PAPAGO_CLIENT_ID` is not configured, '
+        assert self.client_id, ('`PAPAGO_CLIENT_ID` is not configured, '
                                     'it is required by `PapagoTranslatorService. '
                                     'You need to require a client id if you want to use the papago translator.'
                                     'Visit the official website for more information about how to get one.')
@@ -167,7 +165,7 @@ class PapagoTranslatorService(BaseTranslatorService):
             secret_key=self.secret_key,
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text=text)
     
 
@@ -183,11 +181,10 @@ class LibreTranslatorService(BaseTranslatorService):
             target=target_language, 
             source=source_language,
             base_url=getattr(settings, 'LIBRE_TRANSLATE_MIRROR_URL', 'https://libretranslate.com/'), 
-            client_id=self.client_id,
             api_key=getattr(settings, 'LIBRE_TRANSLATE_KEY', None)
         )
         
-        assert isinstance(text, six.string_types), '`text` should a string literal'
+        assert isinstance(text, str), '`text` should a string literal'
         return self.service.translate(text=text)
     
 
